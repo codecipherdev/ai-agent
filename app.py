@@ -8,11 +8,13 @@ prompt = st.text_area("What task do you want me to do?")
 
 if st.button("Run Agent"):
     if prompt:
-        # ✅ Use a lightweight model for Streamlit Cloud
         generator = pipeline('text-generation', model='distilgpt2')
 
+        # ✅ Add instruction to guide the model
+        input_text = f"Write a short poem:\n{prompt}"
+
         result = generator(
-            prompt,
+            input_text,
             max_new_tokens=50,
             truncation=True
         )
@@ -21,7 +23,6 @@ if st.button("Run Agent"):
         st.write("### ✅ Result")
         st.write(output)
 
-        # Save input/output to local logs.db (temporary in Cloud)
         conn = sqlite3.connect("logs.db")
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS logs (prompt TEXT, output TEXT)''')
