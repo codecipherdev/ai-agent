@@ -1,3 +1,4 @@
+
 import streamlit as st
 from transformers import pipeline
 import sqlite3
@@ -12,7 +13,7 @@ if st.button("Run Agent"):
 
         result = generator(
             prompt,
-            max_new_tokens=200,   # ✅ Replaces max_length
+            max_new_tokens=200,
             truncation=True
         )
         output = result[0]['generated_text']
